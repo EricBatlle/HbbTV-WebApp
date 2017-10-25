@@ -47,6 +47,7 @@
 
 #previewPanel{
 	flex: 1;
+    position: relative;
 }
 
 #relatedPanel{

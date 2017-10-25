@@ -58,10 +58,10 @@ function goPage(numPage){
 				var div_item = createItem(channels[1]);
 				div_preview.append(div_item);
 			//ToDo: Uncomment de video
-			// var video = $(document.createElement("object"));
-			// 	video.attr('id',"video");
-			// 	video.attr('type', "video/broadcast");
-			// 	div_preview.append(video);
+			var video = $(document.createElement("object"));
+				video.attr('id',"video");
+				video.attr('type', "video/broadcast");
+				div_preview.append(video);
 
 				
 			var div_related = $(document.createElement("div"));
@@ -77,8 +77,8 @@ function goPage(numPage){
 				div_g.append(div_catalog);
 				div_g.append(div_info);
 				$("#divGraphic").append(div_g);
-				// var	video2 = document.getElementById("video");
-				// video2.bindToCurrentChannel();
+				 var	video2 = document.getElementById("video");
+				 video2.bindToCurrentChannel();
 				$("#divGraphic").append(div_buttons);
 				
 
