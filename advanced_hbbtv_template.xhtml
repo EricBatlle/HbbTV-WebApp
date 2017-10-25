@@ -10,9 +10,11 @@
 <meta http-equiv="Pragma" content="no-cache" />
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script type="text/javascript" src="./js/displayButton.js"></script>
 <script type="text/javascript" src="./js/goPage.js"></script>
 <link rel="stylesheet" type="text/css" href="./css/style.css"></link>
+<link rel="stylesheet" type="text/css" href="./css/page3.css"></link>
 
 <script type="text/javascript" src="./js/hbbtvlib.js"></script>
 <script type="text/javascript" src="./js/keycodes.js"></script>
@@ -32,14 +34,30 @@ window.onload = function(){
 		currentPage = 2;
 		console.log(currentPage);
 	};
-	
-	if( (e.keyCode==VK_ENTER) && (currentPage == 2) ) {
+
+
+	if( (e.keyCode==VK_ENTER) && (currentPage == 2) ) { //ToDo:Este condicional debería ir dentro del anterior, demomento está así por homogeneidad
 		goPage(3);
+
 		currentPage = 3;
 		console.log(currentPage);
 
 	};
-	
+	//Available commands in 3rd page
+	if( currentPage == 3 ){
+	  switch (e.keyCode){
+		  case VK_UP:
+		      	console.log(currList);
+				channelUp();
+			  break;
+		  case VK_DOWN:
+			  channelDown();
+			  break;
+		  default:
+			  console.log("Error");
+			  break;
+	  }
+	};
 	e.preventDefault();
   },false);
 };

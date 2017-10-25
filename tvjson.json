@@ -1,0 +1,36 @@
+{
+  "conUsers": [
+  	{
+  		"username": "Alumne 1"
+  	},
+  	{
+  		"username": "Alumne 2"
+  	},
+  	{
+  		"username": "Alumne 3"
+  	}
+  ],
+  "channels": [
+    {
+      "thumbnail": "thumbnail 1",
+      "numPlaybacks": "29",
+      "albumName": "Album name 1",
+      "artistName": "Artist name 1",
+      "Description": "Description 1",
+    },
+    {
+      "thumbnail": "thumbnail 2",
+      "numPlaybacks": "49",
+      "albumName": "Album name 2",
+      "artistName": "Artist name 2",
+      "Description": "Description 2",
+    },
+    {
+      "thumbnail": "thumbnail 3",
+      "numPlaybacks": "69",
+      "albumName": "Album name 3",
+      "artistName": "Artist name 3",
+      "Description": "Description 3",
+    },
+  ]
+}

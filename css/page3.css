@@ -1,0 +1,50 @@
+#g3Panel{
+	display:flex;
+}
+
+#catalogPanel{
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	background-color: green;
+}
+
+#infoPanel{
+	flex: 1;
+	background-color: red;
+}
+
+#buttonsPanel{
+	display: flex;
+	background-color: blue;
+}
+
+#button{
+	flex:1;
+}
+
+.item{
+	display: flex;
+}
+
+.itemImg, .itemData, .itemBadge{
+	flex: 1;
+}
+
+.itemBadge{
+	display: flex;
+	justify-content: center;
+}
+
+#infoPanel{
+	display: flex;
+	flex-direction: column;
+}
+
+#previewPanel{
+	flex: 1;
+}
+
+#relatedPanel{
+	flex: 1;
+}
