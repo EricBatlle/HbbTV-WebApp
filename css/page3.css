@@ -27,6 +27,10 @@
 	display: flex;
 }
 
+.focus{
+	background: yellow;
+}
+
 .itemImg, .itemData, .itemBadge{
 	flex: 1;
 }

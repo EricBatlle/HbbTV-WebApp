@@ -55,7 +55,7 @@ function goPage(numPage){
 			
 			var div_preview = $(document.createElement("div"));
 				div_preview.attr('id',"previewPanel");
-				var div_item = createItem();
+				var div_item = createItem(channels[1]);
 				div_preview.append(div_item);
 			//ToDo: Uncomment de video
 			// var video = $(document.createElement("object"));
@@ -66,7 +66,7 @@ function goPage(numPage){
 				
 			var div_related = $(document.createElement("div"));
 				div_related.attr('id',"relatedPanel");
-				var div_item = createItem();
+				var div_item = createItem(channels[1]);
 				div_related.append(div_item);
 				
 				div_info.append(div_preview);
@@ -90,38 +90,85 @@ function goPage(numPage){
 	
 }
 function  channelUp() {
-	//pick element with focus
-    //var currElement = $('input:focus');
-
-
-    var currElement = $("#1.item");
+    //pick element with focus
+    var currElement = $(".focus");
+    //saw their id
     var id = currElement.attr('id');
-	//if is the first item of the list
-	if(channels[0]['id'] == id ){
-		console.log("firstItem, no puedes subir más");
-	}
-	else if(currList[0]['id'] == id){
-		id--;
-        //focus the decremented id
-		var newElement = $("#"+id+".item");
-			newElement.focus();
+
+    //if is the first item of the currList -> can't go up
+    if(currList[0]['id'] == id ){
+        //If it is the first item also of the entire list
+        if(channels[0]['id'] == id){
+            console.log("First item, can't go up");
+        }
+        else{
+            for(i = currList.length-1; i > 0; i--) {
+                currList[i] = currList[i - 1];
+            }
+            id--;
+            currList[i] = channels[id];
+            currList[i+1]['name'] = "";
+            currList[i]['name'] = "focus";
+        }
+    }
+    else{
+        for (i = 0; i < currList.length; i++){
+            if(currList[i]['id'] == id){
+                $(".item.focus").removeClass("focus");
+                currList[i]['name'] = "";
+                currList[i-1]['name'] = "focus";
+            }
+        }
+    }
+
+    //Redraw list
+    $("#catalogPanel").empty();
+    for(var i = 0; i < currList.length; i++){
+        var div_item = createItem(currList[i]);
+        $("#catalogPanel").append(div_item);
     }
 
 }
 
 function channelDown() {
     //pick element with focus
-    //var currElement = $('input:focus');
-
-
-    var currElement = $("#1.item");
+    var currElement = $(".focus");
     //saw their id
-    console.log(currElement.attr('id'));
-    //focus the decremented id
-    //if is the last item of the list
-    if(currList[currList.length-1]['id'] == currElement.attr('id') ){
-        //remove first item of
-        console.log("lastItem");
+    var id = currElement.attr('id');
+
+    //if is the last item of the currList -> can't go down
+    if(currList[currList.length-1]['id'] == id ){
+    	//If it is the last item also of the entire list
+    	if(channels[channels.length-1]['id'] == id){
+    		console.log("Last item, can't go down");
+		}
+		else{
+    		for(i = 0; i < currList.length-1; i++) {
+                currList[i] = currList[i + 1];
+            }
+            id++;
+			currList[i] = channels[id];
+            currList[i-1]['name'] = "";
+            currList[i]['name'] = "focus";
+		}
+    }
+    else{
+        for (i = 0; i < currList.length; i++){
+			if(currList[i]['id'] == id){
+                $(".item.focus").removeClass("focus");
+                currList[i]['name'] = "";
+                currList[i+1]['name'] = "focus";
+			}
+		}
+    }
+
+    //Redraw list
+	//Primero vaciarla
+    $("#catalogPanel").empty();
+	//Luego repintarla
+    for(var i = 0; i < currList.length; i++){
+        var div_item = createItem(currList[i]);
+        $("#catalogPanel").append(div_item);
     }
 
 }
@@ -165,33 +212,38 @@ function getJsonChannels() {
     };
 	for (i = 0; i < json.channels.length; i++){
 		json.channels[i].id = i;
+		json.channels[i].name = "";
 	}
+	json.channels[0].name = "focus";
     return json.channels;
 }
 
-function createItem(id){
+function createItem(channel){
 
     var div_item = $(document.createElement("div"));
 		div_item.attr('class',"item");
-    	div_item.attr('id',id);
-
-	var div_item_img = $(document.createElement("img"));
+    	div_item.attr('id',channel['id']);
+    	if(channel['name'] === 'focus'){
+            div_item.addClass('focus');
+        }
+	//ToDo:end the thumbnail
+    var div_item_img = $(document.createElement("img"));
 		div_item_img.attr('src',"https://www.youtube.com/yts/img/yt_1200-vfl4C3T0K.png");
 		div_item_img.attr('class',"itemImg");
 
 	var div_item_data = $(document.createElement("div"));
 		div_item_data.attr('class',"item_data");
 	
-	var div_item_album = $(document.createElement("p")).text("Album name 1");
+	var div_item_album = $(document.createElement("p")).text(channel['albumName']);
 	
-	var div_item_artist = $(document.createElement("p")).text("Artist name 1");	
+	var div_item_artist = $(document.createElement("p")).text(channel['artistName']);
 		div_item_data.append(div_item_album);
 		div_item_data.append(div_item_artist);
 	
 	var div_item_badge = $(document.createElement("div"));
 		div_item_badge.attr('class',"itemBadge");
 		
-	var div_item_count = $(document.createElement("p")).text("3");
+	var div_item_count = $(document.createElement("p")).text(channel['numPlaybacks']);
 		div_item_badge.append(div_item_count);
 		
 		div_item.append(div_item_img);
@@ -207,11 +259,10 @@ function createCatalogPanel(channels, currList) {
 
     //Create channel List
     for(var i = 0; i < 2; i++){
-        var div_item = createItem(channels[i]['id']);
+        var div_item = createItem(channels[i]);
         div_catalog.append(div_item);
-
-        //currList.push(channels[i]);
     }
+
 	return div_catalog;
 }
 
